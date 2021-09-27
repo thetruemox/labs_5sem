@@ -84,6 +84,7 @@ bool AppClass::CheckString(const char *theString)
     int max_length = 16;
 
     _fsm.enterStartState();
+    std::cout << "Start" << std::endl;
 
     while (*theString != '\0')
     {
@@ -91,44 +92,69 @@ bool AppClass::CheckString(const char *theString)
         {
             _fsm.OpenSymb();
             ++theString;
+            std::cout << "OpenSymb" << std::endl;
         } else if ((*theString >= 'a' && *theString <= 'z') || (*theString >= 'A' && *theString <= 'Z'))
         {
             ++length;
             if (length > max_length)
+            {
                 _fsm.Unknown();
-            else
+                std::cout << "Unknown" << std::endl;
+            }
+            else 
+            {
                 _fsm.Letter();
+                std::cout << "Letter" << std::endl;
+            }
 
         }
         else if (*theString >= '0' && *theString <= '9')
         {
             ++length;
             if (length > max_length)
+            {
                 _fsm.Unknown();
+                std::cout << "Unknown" << std::endl;
+            }
             else
+            {
                 _fsm.Number();
+                std::cout << "Number" << std::endl;
+            }
         }
         else if (*theString == '!')
         {
             ++length;
             _fsm.Exc_point();
+            std::cout << "Exc_point" << std::endl;
         }
         else if (*theString == '&' || *theString == '|' || *theString == '^')
         {
             length = 0;
             _fsm.Math();
+            std::cout << "Math" << std::endl;
         }
         else if (*theString == '#')
         {
             _fsm.Hash();
-        } else _fsm.Unknown();
-               
+            std::cout << "Hash" << std::endl;
+        }
+        else
+        {
+            _fsm.Unknown();
+            std::cout << "Unknown" << std::endl;
+        }
 
         ++theString;
     }
     
     // end of string has been reached - send the EOS transition.
     _fsm.EOS();
+    std::cout << "EOS" << std::endl;
+    
+    _fsm.Epsilon();
+    
+    std::cout << "Epsilon" << std::endl;
 
     return isAcceptable;
 }

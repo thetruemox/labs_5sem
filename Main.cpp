@@ -112,7 +112,11 @@ int main(int argc, char *argv[])
     */
 
     string line;
+  
+    while (1)
+    {
 
+   
         cin >> line;
    
         cout << "The string \"" << line << "\" is ";
@@ -132,7 +136,7 @@ int main(int argc, char *argv[])
         {
             cout << "not acceptable - " << smcex.what() << endl;
         }
-   
+    }
 
     return 0;
 }
