@@ -85,8 +85,14 @@ int main(int argc, char *argv[])
 
     if (!fin.is_open()) 
     { 
-        cout << "Can`t open the file!" << endl; 
+        cout << "Can`t open the test.txt!" << endl; 
         return -1;
+    }
+
+    if (!fout.is_open())
+    {
+        cout << "Can`t open the time.txt!" << endl;
+        return -2;
     }
 
     string word;
