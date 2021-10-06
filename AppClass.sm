@@ -68,7 +68,7 @@ S0
 				Math			Error			{}
 				Hash			Error			{}
 				Unknown			Error			{}
-				EOS				Error			{}
+				EOS				Error			{Unacceptable();}
 }
 
 S1
@@ -80,7 +80,7 @@ S1
 				Math			S0				{}
 				Hash			S2				{}
 				Unknown			Error			{}
-				EOS				Error			{}
+				EOS				Error			{Unacceptable();}
 }
 
 S2

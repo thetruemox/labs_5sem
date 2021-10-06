@@ -63,69 +63,62 @@
 
 #include "AppClass.h"
 
+#include <stdio.h>
+#include <map>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <time.h>
+
 using namespace std;
 using namespace statemap;
 
 int main(int argc, char *argv[])
 {
+    clock_t start, stop;
+
+    std::ifstream fin;
+    fin.open("test.txt", ios_base::in);
+
+    std::ofstream fout;
+    fout.open("time.txt", ios_base::out);
+
+    if (!fin.is_open()) 
+    { 
+        cout << "Can`t open the file!" << endl; 
+        return -1;
+    }
+
+    string word;
+    std::map<string, int> map;
     AppClass thisContext;
 
-    /*
-    if (argc < 2)
+    bool isAccpetable;
+//--------
+    while (fin.good())
     {
-        cerr << "No string to check." << endl;
-        retcode = 2;
-    }
-    else if (argc > 2)
-    {
-        cerr << "Only one argument is accepted." << endl;
-        retcode = 3;
-    }
-    else
-    {
-        cout << "The string \"" << argv[1] << "\" is ";
+        fin >> word;
+    
+        cout << "The string \"" << word << "\" is ";
 
         try
         {
-            if (thisContext.CheckString(argv[1]) == false)
+            start = clock();
+            //for (size_t i = 0; i < 100000; i++)
+            //{
+            isAccpetable = thisContext.CheckString(word.c_str());
+            //}
+            stop = clock();
+
+            fout << word << " " << (stop - start) / CLK_TCK << endl;
+
+            if (isAccpetable)
             {
-                cout << "not acceptable." << endl;
-                retcode = 1;
-            }
-            else
-            {
-                cout << "acceptable." << endl;
-            }
-        }
-        catch (const SmcException &smcex)
-        {
-            cout << "not acceptable - "
-                 << smcex.what()
-                 << '.'
-                 << endl;
-
-            retcode = 1;
-        }
-    }
-
-    return retcode;
-    */
-
-    string line;
-  
-    while (1)
-    {
-
-   
-        cin >> line;
-   
-        cout << "The string \"" << line << "\" is ";
-
-        try
-        {
-            if (thisContext.CheckString(line.c_str()))
-            {
-                cout << "acceptable" << endl;           
+                cout << "acceptable" << endl;
+                word.erase(0, 1);
+                word.erase(0, 1);
+                word.erase(word.size() - 1, 1);
+                ++map[word];
             }
             else
             {
@@ -136,6 +129,15 @@ int main(int argc, char *argv[])
         {
             cout << "not acceptable - " << smcex.what() << endl;
         }
+    }
+//--------
+    fin.close();
+    fout.close();
+
+    std::map<string, int>::iterator map_it = map.begin();
+    for (int i = 0; map_it != map.end(); map_it++)
+    {
+        cout << map_it->first << " Number: " << map_it->second << endl;
     }
 
     return 0;
