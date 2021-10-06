@@ -1,1 +1,2 @@
-<-aboba&valakas|pena^detrov&motoblock^q228# 2
+<-aboba&valakas|pena^detrov&motoblock^q228# 0
+<-valakas|pena^detrov&motoblock^q228# 0

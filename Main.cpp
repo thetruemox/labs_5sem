@@ -118,7 +118,21 @@ int main(int argc, char *argv[])
                 word.erase(0, 1);
                 word.erase(0, 1);
                 word.erase(word.size() - 1, 1);
-                ++map[word];
+
+                int st_pos = 0;
+                string tmp;
+                for (int i = 0; i < word.length(); i++)
+                {
+                    if (word[i] == '^' || word[i] == '&' || word[i] == '|')
+                    {
+                        tmp = word.substr(st_pos, i - st_pos);
+                        ++map[tmp];
+                        st_pos = i + 1;
+                    }
+                }
+
+                ++map[word.substr(st_pos, word.length())];
+                
             }
             else
             {
@@ -137,7 +151,7 @@ int main(int argc, char *argv[])
     std::map<string, int>::iterator map_it = map.begin();
     for (int i = 0; map_it != map.end(); map_it++)
     {
-        cout << map_it->first << " Number: " << map_it->second << endl;
+        cout << map_it->first << " : " << map_it->second << endl;
     }
 
     return 0;
