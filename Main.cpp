@@ -115,8 +115,7 @@ int main(int argc, char *argv[])
             if (isAccpetable)
             {
                 cout << "acceptable" << endl;
-                word.erase(0, 1);
-                word.erase(0, 1);
+                word.erase(0, 2);
                 word.erase(word.size() - 1, 1);
 
                 int st_pos = 0;
