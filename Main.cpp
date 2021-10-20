@@ -101,7 +101,7 @@ int main(int argc, char *argv[])
 
     bool isAccpetable;
 //--------
-    while (fin.good())
+    while (!fin.eof())
     {
         fin >> word;
     
@@ -110,10 +110,9 @@ int main(int argc, char *argv[])
         try
         {
             start = clock();
-            //for (size_t i = 0; i < 100000; i++)
-            //{
+           
             isAccpetable = thisContext.CheckString(word.c_str());
-            //}
+         
             stop = clock();
 
             fout << word << " " << (stop - start) / CLK_TCK << endl;
