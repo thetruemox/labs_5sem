@@ -47,6 +47,10 @@
 //
 
 #include "AppClass_sm.h"
+#include <map>
+#include <string>
+#include <list>
+#define MAX_LENGTH 16
 
 #ifdef CRTP
 class AppClass : public AppClassContext<AppClass>
@@ -60,8 +64,11 @@ private:
 #endif
 
     bool isAcceptable;
-        // If a string is acceptable, then this variable is set to YES;
-        // NO, otherwise.
+    int length = 0, max_length = MAX_LENGTH - 1;
+
+    std::list<std::string> word_list;
+    std::string temp_word;
+    std::map<std::string, int> map;
 
 public:
     AppClass();
@@ -78,6 +85,21 @@ public:
 
     inline void Unacceptable()
     { isAcceptable = false; };
+
+    inline void inc_length()
+    {
+        this->length++;
+    };
+    inline void reset_length()
+    {
+        this->length = 0;
+    };
+
+    inline std::map<std::string, int> get_map()
+    {
+        return this->map;
+    };
+    
         // State map actions.
 };
 
