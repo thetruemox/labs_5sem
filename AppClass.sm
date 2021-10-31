@@ -50,48 +50,24 @@
 Start
 {
 				OpenSymb		S0				{}
-				Exc_point		Error			{}
-				Letter			Error			{}
-				Number			Error			{}
-				Math			Error			{}
-				Hash			Error			{}
-				Unknown			Error			{}
-				EOS				Error			{}
-}
-
-S0
-{
-				OpenSymb		Error			{}
-				Exc_point		S1				{}
-				Letter			S1				{}
-				Number			Error			{}
-				Math			Error			{}
-				Hash			Error			{}
-				Unknown			Error			{}
-				EOS				Error			{Unacceptable();}
+}												 
+												 
+S0												 
+{												 
+				Exc_point		S1				{ inc_length(); }
+				Letter			S1				{ inc_length(); }		
 }
 
 S1
 {
-				OpenSymb		Error			{}
-				Exc_point		Error			{}
-				Letter			S1				{}
-				Number			S1				{}
-				Math			S0				{}
+				Letter			S1				{inc_length();}
+				Number			S1				{inc_length();}
+				Math			S0				{reset_length();}
 				Hash			S2				{}
-				Unknown			Error			{}
-				EOS				Error			{Unacceptable();}
 }
 
 S2
 {
-				OpenSymb		Error			{}
-				Exc_point		Error			{}
-				Letter			Error			{}
-				Number			Error			{}
-				Math			Error			{}
-				Hash			Error			{}
-				Unknown			Error			{}
 				EOS				OK				{Acceptable();}
 }
 
@@ -102,15 +78,20 @@ OK
 
 Error
 {	
-				OpenSymb		nil				{}
-				Exc_point		nil				{}
-				Letter			nil				{}
-				Number			nil				{}
-				Math			nil				{}
-				Hash			nil				{}
-				Unknown			nil				{}
 				EOS				nil				{Unacceptable();}
 				Epsilon			Start			{}
+}
+
+Default
+{
+				OpenSymb		Error			{}
+				Exc_point		Error			{}
+				Letter			Error			{}
+				Number			Error			{}
+				Math			Error			{}
+				Hash			Error			{}
+				Unknown			Error			{}
+				EOS				Error			{}
 }
 
 %%

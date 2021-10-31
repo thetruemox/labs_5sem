@@ -76,7 +76,7 @@ using namespace statemap;
 int main(int argc, char *argv[])
 {
     clock_t start, stop;
-
+    
     std::ifstream fin;
     fin.open("test.txt", ios_base::in);
 
@@ -100,6 +100,11 @@ int main(int argc, char *argv[])
     AppClass thisContext;
 
     bool isAccpetable;
+
+    /* todo
+    * написать генератор строк
+    * regex 
+    */
 //--------
     while (!fin.eof())
     {
@@ -119,24 +124,7 @@ int main(int argc, char *argv[])
 
             if (isAccpetable)
             {
-                cout << "acceptable" << endl;
-                word.erase(0, 2);
-                word.erase(word.size() - 1, 1);
-
-                int st_pos = 0;
-                string tmp;
-                for (int i = 0; i < word.length(); i++)
-                {
-                    if (word[i] == '^' || word[i] == '&' || word[i] == '|')
-                    {
-                        tmp = word.substr(st_pos, i - st_pos);
-                        ++map[tmp];
-                        st_pos = i + 1;
-                    }
-                }
-
-                ++map[word.substr(st_pos, word.length())];
-                
+                cout << "acceptable" << endl;          
             }
             else
             {
@@ -148,6 +136,8 @@ int main(int argc, char *argv[])
             cout << "not acceptable - " << smcex.what() << endl;
         }
     }
+
+    map = thisContext.get_map();
 //--------
     fin.close();
     fout.close();

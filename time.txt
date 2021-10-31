@@ -1,5 +1,3 @@
-<-first^!second&third|fourth# 0
-<-ahaha!# 0
-<-ahahahahahahahahahahahahahahhahahahahah# 0
-tryme 0
-tryme 0
+<-a^b^c&d|e^f|g# 0
+<gal# 0
+<-aga# 0

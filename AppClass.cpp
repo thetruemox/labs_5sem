@@ -80,8 +80,8 @@ AppClass::AppClass()
 
 bool AppClass::CheckString(const char *theString)
 { 
-    int length = 0;
-    int max_length = 16;
+    this->word_list.clear();
+    this->temp_word = "";
 
     _fsm.enterStartState();
    // std::cout << "Start" << std::endl;
@@ -95,7 +95,7 @@ bool AppClass::CheckString(const char *theString)
             //std::cout << "OpenSymb" << std::endl;
         } else if ((*theString >= 'a' && *theString <= 'z') || (*theString >= 'A' && *theString <= 'Z'))
         {
-            ++length;
+      
             if (length > max_length)
             {
                 _fsm.Unknown();
@@ -104,13 +104,14 @@ bool AppClass::CheckString(const char *theString)
             else 
             {
                 _fsm.Letter();
+                this->temp_word += *theString;
               //  std::cout << "Letter" << std::endl;
             }
 
         }
         else if (*theString >= '0' && *theString <= '9')
         {
-            ++length;
+     
             if (length > max_length)
             {
                 _fsm.Unknown();
@@ -119,24 +120,28 @@ bool AppClass::CheckString(const char *theString)
             else
             {
                 _fsm.Number();
+                this->temp_word += *theString;
                // std::cout << "Number" << std::endl;
             }
         }
         else if (*theString == '!')
-        {
-            ++length;
+        {         
             _fsm.Exc_point();
+            this->temp_word += *theString;
            // std::cout << "Exc_point" << std::endl;
         }
         else if (*theString == '&' || *theString == '|' || *theString == '^')
-        {
-            length = 0;
+        {      
             _fsm.Math();
+            this->word_list.push_back(this->temp_word);
+            this->temp_word = "";
           //  std::cout << "Math" << std::endl;
         }
         else if (*theString == '#')
         {
             _fsm.Hash();
+            this->word_list.push_back(this->temp_word);
+            this->temp_word = "";
           //  std::cout << "Hash" << std::endl;
         }
         else
@@ -155,6 +160,17 @@ bool AppClass::CheckString(const char *theString)
     _fsm.Epsilon();
     
   //  std::cout << "Epsilon" << std::endl;
+
+
+    if (isAcceptable)
+    {
+        std::list<std::string>::iterator list_it = this->word_list.begin();
+
+        for (int i = 0; list_it != this->word_list.end(); list_it++)
+        {
+            ++map[*list_it];
+        }
+    }
 
     return isAcceptable;
 }

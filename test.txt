@@ -1,4 +1,1 @@
-<-first^!second&third|fourth#
-<-ahaha!#
-<-ahahahahahahahahahahahahahahhahahahahah#
-tryme 
+<-a^b^c&d|e^f|g# <gal# <-aga#
