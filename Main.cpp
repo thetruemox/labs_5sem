@@ -61,6 +61,12 @@
 // Initial revision
 //
 
+
+    /* todo
+    * написать генератор строк
+    * regex
+    */
+
 #include "AppClass.h"
 
 #include <stdio.h>
@@ -69,12 +75,16 @@
 #include <fstream>
 #include <iostream>
 #include <time.h>
+#include "FileGenerator.h"
 
 using namespace std;
 using namespace statemap;
 
 int main(int argc, char *argv[])
 {
+    FileGenerator fg;
+    fg.generate("test.txt");
+    
     clock_t start, stop;
     
     std::ifstream fin;
@@ -101,16 +111,12 @@ int main(int argc, char *argv[])
 
     bool isAccpetable;
 
-    /* todo
-    * написать генератор строк
-    * regex 
-    */
-//--------
+    int time_index = 0;
     while (!fin.eof())
     {
         fin >> word;
     
-        cout << "The string \"" << word << "\" is ";
+        //cout << "The string \"" << word << "\" is ";
 
         try
         {
@@ -120,15 +126,19 @@ int main(int argc, char *argv[])
          
             stop = clock();
 
-            fout << word << " " << (stop - start) / CLK_TCK << endl;
+            
 
             if (isAccpetable)
             {
-                cout << "acceptable" << endl;          
+                fout << time_index <<" is acceptable, " << "time: " << (stop - start) / CLK_TCK << endl;
+                ++time_index;
+                //cout << "acceptable" << endl;          
             }
             else
             {
-                cout << "not acceptable" << endl;
+                fout << time_index << " is not acceptable, " << "time: " << (stop - start) / CLK_TCK << endl;
+                ++time_index;
+                //cout << "not acceptable" << endl;
             }
         }
         catch (const SmcException& smcex)
@@ -138,15 +148,17 @@ int main(int argc, char *argv[])
     }
 
     map = thisContext.get_map();
-//--------
+
     fin.close();
     fout.close();
 
+    /*
     std::map<string, int>::iterator map_it = map.begin();
     for (int i = 0; map_it != map.end(); map_it++)
     {
         cout << map_it->first << " : " << map_it->second << endl;
     }
+    */
 
     return 0;
 }

@@ -54,8 +54,8 @@ Start
 												 
 S0												 
 {												 
-				Exc_point		S1				{ inc_length(); }
-				Letter			S1				{ inc_length(); }		
+				Exc_point		S1				{inc_length();}
+				Letter			S1				{inc_length();}		
 }
 
 S1
@@ -68,18 +68,18 @@ S1
 
 S2
 {
-				EOS				OK				{Acceptable();}
+				EOS				OK				{Acceptable(); reset_length();}
 }
 
 OK
 {
-				Epsilon			Start			{}
+				Epsilon			Start			{reset_length();}
 }
 
 Error
 {	
-				EOS				nil				{Unacceptable();}
-				Epsilon			Start			{}
+				EOS				nil				{Unacceptable(); reset_length();}
+				Epsilon			Start			{reset_length();}
 }
 
 Default
