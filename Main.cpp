@@ -61,24 +61,26 @@
 // Initial revision
 //
 
-
-    /* todo
-    * написать генератор строк
-    * regex
-    */
-
-#include "AppClass.h"
-
 #include <stdio.h>
 #include <map>
 #include <string>
 #include <fstream>
 #include <iostream>
 #include <time.h>
+#include <regex>
+
 #include "FileGenerator.h"
+#include "AppClass.h"
 
 using namespace std;
 using namespace statemap;
+
+bool CheckStringRegex(string str)
+{
+    regex regular("[<][-][a-zA-Z!][a-zA-Z0-9]{0,15}([&|\\||\\^][a-zA-Z!][a-zA-Z0-9]{0,15})*[#]"); 
+    return regex_match(str.c_str(), regular);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -116,14 +118,15 @@ int main(int argc, char *argv[])
     {
         fin >> word;
     
-        //cout << "The string \"" << word << "\" is ";
+        cout << "The string \"" << word << "\" is ";
 
         try
         {
             start = clock();
            
-            isAccpetable = thisContext.CheckString(word.c_str());
-         
+            //isAccpetable = thisContext.CheckString(word.c_str());
+            isAccpetable = CheckStringRegex(word);
+
             stop = clock();
 
             
@@ -132,13 +135,13 @@ int main(int argc, char *argv[])
             {
                 fout << time_index <<" is acceptable, " << "time: " << (stop - start) / CLK_TCK << endl;
                 ++time_index;
-                //cout << "acceptable" << endl;          
+                cout << "acceptable" << endl;          
             }
             else
             {
                 fout << time_index << " is not acceptable, " << "time: " << (stop - start) / CLK_TCK << endl;
                 ++time_index;
-                //cout << "not acceptable" << endl;
+                cout << "not acceptable" << endl;
             }
         }
         catch (const SmcException& smcex)
