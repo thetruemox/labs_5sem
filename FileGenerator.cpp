@@ -1,6 +1,6 @@
 #include "FileGenerator.h"
-#define MAX_STRINGS 10
-#define MAX_VARS 10
+#define MAX_STRINGS 1
+#define MAX_VARS 100
 
 
 

@@ -61,6 +61,19 @@
 // Initial revision
 //
 
+#ifndef _REGEX_MAX_COMPLEXITY_COUNT
+#define _REGEX_MAX_COMPLEXITY_COUNT   0   /* set to 0 to disable */
+#endif /* _REGEX_MAX_COMPLEXITY_COUNT */
+
+
+#ifndef _REGEX_MAX_STACK_COUNT
+#ifdef _WIN64
+#define _REGEX_MAX_STACK_COUNT   0    /* set to 0 to disable */
+#else /* _WIN64 */
+#define _REGEX_MAX_STACK_COUNT   0   /* set to 0 to disable */
+#endif /* _WIN64 */
+#endif /* _REGEX_MAX_STACK_COUNT */
+
 #include <stdio.h>
 #include <map>
 #include <string>
@@ -77,8 +90,15 @@ using namespace statemap;
 
 bool CheckStringRegex(string str)
 {
-    regex regular("[<][-][a-zA-Z!][a-zA-Z0-9]{0,15}([&|\\||\\^][a-zA-Z!][a-zA-Z0-9]{0,15})*[#]"); 
-    return regex_match(str.c_str(), regular);
+    try {
+        regex regular("[<][-][a-zA-Z!][a-zA-Z0-9]{0,15}([&|\\||\\^][a-zA-Z!][a-zA-Z0-9]{0,15})*[#]");
+        return regex_match(str.c_str(), regular);
+    }
+    catch (const std::exception& ex)
+    {
+        cout << ex.what() << endl;
+    }
+    
 }
 
 
@@ -118,7 +138,7 @@ int main(int argc, char *argv[])
     {
         fin >> word;
     
-        cout << "The string \"" << word << "\" is ";
+        //cout << "The string \"" << word << "\" is ";
 
         try
         {
@@ -135,13 +155,13 @@ int main(int argc, char *argv[])
             {
                 fout << time_index <<" is acceptable, " << "time: " << (stop - start) / CLK_TCK << endl;
                 ++time_index;
-                cout << "acceptable" << endl;          
+                //cout << "acceptable" << endl;          
             }
             else
             {
                 fout << time_index << " is not acceptable, " << "time: " << (stop - start) / CLK_TCK << endl;
                 ++time_index;
-                cout << "not acceptable" << endl;
+                //cout << "not acceptable" << endl;
             }
         }
         catch (const SmcException& smcex)
